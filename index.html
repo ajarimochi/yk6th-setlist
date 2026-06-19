@@ -261,11 +261,11 @@
         <label>公演タイトル</label>
         <select id="liveTitle" onchange="autoFillLiveInfo()">
             <option value="">-- 公演を選択してください --</option>
-            <option value="6th ライブツアー 札幌公演">6th ライブツアー 札幌公演</option>
-            <option value="6th ライブツアー 東京公演">6th ライブツアー 東京公演</option>
-            <option value="6th ライブツアー 名古屋公演">6th ライブツアー 名古屋公演</option>
-            <option value="6th ライブツアー 大阪公演">6th ライブツアー 大阪公演</option>
-            <option value="6th ライブツアー 福岡公演">6th ライブツアー 福岡公演</option>
+            <option value="駒形友梨6thライブツアー札幌">駒形友梨6thライブツアー札幌</option>
+            <option value="駒形友梨6thライブツアー東京">駒形友梨6thライブツアー東京</option>
+            <option value="駒形友梨6thライブツアー名古屋">駒形友梨6thライブツアー名古屋</option>
+            <option value="駒形友梨6thライブツアー大阪">駒形友梨6thライブツアー大阪</option>
+            <option value="駒形友梨6thライブツアー福岡">駒形友梨6thライブツアー福岡</option>
         </select>
     </div>
     <div class="form-group">
@@ -280,8 +280,8 @@
         <label>公演区分</label>
         <div class="radio-group">
             <label><input type="radio" name="liveTime" value="" checked>1日1公演</label>
-            <label><input type="radio" name="liveTime" value="昼公演"> 昼公演</label>
-            <label><input type="radio" name="liveTime" value="夜公演"> 夜公演</label>
+            <label><input type="radio" name="liveTime" value="昼"> 昼公演</label>
+            <label><input type="radio" name="liveTime" value="夜"> 夜公演</label>
         </div>
     </div>
     
@@ -327,31 +327,83 @@
 </div>
 
 <script>
-const MAIN_ARTIST = "ビートルズ";
+const MAIN_ARTIST = "駒形友梨";
 
 const tourData = {
-    "6th ライブツアー 札幌公演": { date: "2026-06-20", venue: "札幌・プラント", type: "oneman", enemy: "" },
-    "6th ライブツアー 東京公演": { date: "2026-08-01", venue: "SHIBYA PLEASURE PLEASURE", type: "taiban", enemy: "BURNOUT SYNDROMES" },
-    "6th ライブツアー 愛知公演": { date: "2026-08-15", venue: "SPADE BOX", type: "taiban", enemy: "Machico" },
-    "6th ライブツアー 大阪公演": { date: "2026-08-16", venue: "梅田Shangri-la", type: "taiban", enemy: "中島愛" },
-    "6th ライブツアー 福岡公演": { date: "2026-07-20", venue: "福岡ROOMS", type: "oneman", enemy: "" },
-    "6th ライブツアー 香川公演": { date: "2026-07-26", venue: "高松DIME", type: "oneman", enemy: "" },
+    "駒形友梨6thライブツアー札幌公演": { date: "2026-06-20", venue: "札幌・プラント", type: "oneman", enemy: "" },
+    "駒形友梨6thライブツアー東京公演": { date: "2026-08-01", venue: "SHIBYA PLEASURE PLEASURE", type: "taiban", enemy: "BURNOUT SYNDROMES" },
+    "駒形友梨6thライブツアー愛知公演": { date: "2026-08-15", venue: "SPADE BOX", type: "taiban", enemy: "Machico" },
+    "駒形友梨6thライブツアー大阪公演": { date: "2026-08-16", venue: "梅田Shangri-la", type: "taiban", enemy: "中島愛" },
+    "駒形友梨6thライブツアー福岡公演": { date: "2026-07-20", venue: "福岡ROOMS", type: "oneman", enemy: "" },
+    "駒形友梨6thライブツアー香川公演": { date: "2026-07-26", venue: "高松DIME", type: "oneman", enemy: "" },
 };
 
 // ★変更：songListにタイアップ情報や原曲者情報を追加（subInfo プロパティ）
 const songList = [
-    { name: "Help!", kana: "ヘルプ", subInfo: "映画『ヘルプ!4人はアイドル』主題歌" },
-    { name: "Hey Jude", kana: "ヘイジュード" },
-    { name: "Let It Be", kana: "レットイットビー" },
-    { name: "Yesterday", kana: "イエスタデイ" },
-    { name: "愛こそすべて", kana: "アイコソスベテ" },
-    { name: "涙の乗車券", kana: "ナミダノジョウシャケン" },
-    { name: "Bohemian Rhapsody", kana: "ボヘミアンラプソディ", taibanFlag: true, subInfo: "クイーン" },
-    { name: "We Will Rock You", kana: "ウィーウィルロックユー", taibanFlag: true, subInfo: "クイーン" },
-    { name: "Don't Stop Me Now", kana: "ドントストップミーナウ", taibanFlag: true, subInfo: "クイーン" },
-    { name: "I Don't Want to Miss a Thing", kana: "アイドントウォントトゥミスアシング", taibanFlag: true, subInfo: "エアロスミス" },
-    { name: "Walk This Way", kana: "ウォークディスウェイ", taibanFlag: true, subInfo: "エアロスミス" },
-    { name: "Dream On", kana: "ドリームオン", taibanFlag: true, subInfo: "エアロスミス" },
+    { name: "トマレのススメ", kana: "トマレノススメ" },
+    { name: "キミと恋の予感", kana: "キミトコイノヨカン" },
+    { name: "コンパス", kana: "コンパス" },
+    { name: "ララルハレルヤ", kana: "ララルハレルヤ" },
+    { name: "happy weekend", kana: "ハッピー ウィークエンド" },
+    { name: "Night Walk", kana: "ナイトウォーク" },
+    { name: "クロックワイズ", kana: "クロックワイズ" },
+    { name: "孤悲", kana: "コイ" },
+    { name: "創だらけの詩", kana: "キズダラケノウタ" },
+    { name: "はじめからきっと", kana: "ハジメカラキット" },
+    { name: "I wish", kana: "アイ ウィッシュ" },
+    { name: "Dreaming Night", kana: "ドリーミング ナイト" },
+    { name: "ビターフラッペ", kana: "ビターフラッペ" },
+    { name: "2 world", kana: "ツー ワールド" },
+    { name: "First Step", kana: "ファースト ステップ" },
+    { name: "going forward", kana: "ゴーイング フォーワード" },
+    { name: "Here I Am", kana: "ヒア アイ アム" },
+    { name: "Neon Sign", kana: "ネオン サイン" },
+    { name: "FLY!", kana: "フライ" },
+    { name: "Yellow Love", kana: "イエロー ラブ" },
+    { name: "our story", kana: "アワー ストーリー" },
+    { name: "君の心に触れる歌", kana: "キミノココロニフレルウタ" },
+    { name: "Night Walk", kana: "ナイト ウォーク" },
+    { name: "empty", kana: "エンプティ" },
+    { name: "オービタル", kana: "オービタル" },
+    { name: "Love is Action!", kana: "ラブ イズ アクション" },
+    { name: "真珠星", kana: "シンジュボシ" },
+    { name: "insomnia", kana: "インソムニア" },
+    { name: "Good Night", kana: "グッド ナイト" },
+    { name: "a Day~and the light comes~", kana: "ア デイ アンド ザ ライト カムズ" },
+    { name: "クロワッサン", kana: "クロワッサン" },
+    { name: "On My Way", kana: "オン マイ ウェイ" },
+    { name: "シングデイズ", kana: "シングデイズ" },
+    { name: "call me today", kana: "コール ミー トゥデイ" },
+    { name: "今日は", kana: "キョウハ" },
+    { name: "ばいばい", kana: "バイバイ" },
+    { name: "アクアリウム", kana: "アクアリウム" },
+    { name: "ララルハレルヤ", kana: "ララルハレルヤ" },
+    { name: "invincible self", kana: "インヴィンシブル セルフ" },
+    { name: "おそろい", kana: "オソロイ" },
+    { name: "August 31", kana: "オーガスト サーティファースト" },
+    { name: "優しい雨", kana: "ヤサシイアメ" },
+    { name: "night sea", kana: "ナイト シー" },
+    { name: "starting in the haze", kana: "スターティング イン ザ ヘイズ" },
+    { name: "メイズ", kana: "メイズ" },
+    { name: "クロックワイズ", kana: "クロックワイズ" },
+    { name: "It's HEAVEN", kana: "イッツ ヘブン" },
+    { name: "時の葉", kana: "トキノハ" },
+    { name: "ソノヒ", kana: "ソノヒ" },
+    { name: "Talk 2 Night", kana: "トーク トゥ ナイト" },
+    { name: "トマレのススメ", kana: "トマレノススメ" },
+    { name: "Lonely Blue が終わる頃には", kana: "ロンリー ブルー ガオワルコロニハ" },
+    { name: "はじめからきっと", kana: "ハジメカラキット" },
+    { name: "All for one Forever", kana: "オール フォー ワン フォーエバー", subInfo: "映画プリキュアオールスターズF" },
+    { name: "カラフルVacation", kana: "カラフルバケーション", subInfo: "PA大海物語 With アグネス・ラム" },
+    { name: "NExt Wave!!", kana: "ネクスト ウェーブ", subInfo: "PA大海物語 With アグネス・ラム" },
+    { name: "Champagne Gold", kana: "シャンパン ゴールド", subInfo: "PA大海物語 With アグネス・ラム" },
+    { name: "identity my ultimatum", kana: "アイデンティティ マイ アルティメイタム", subInfo: "Sho from MY FIRST STORY feat.駒形友梨/ウエノルカ(眩暈SIREN)" },
+    { name: "リコリス", kana: "リコリス", subInfo: "東堂凛" },
+    { name: "SHINE！！ キラキラ⭐︎プリキュアアラモード", kana: "シャインキラキラプリキュアアラモード", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "勇気が君を待ってる", kana: "ユウキガキミヲマッテル", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "Lu La La⭐︎Lumière", kana: "ルララルミエール", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "キラキラ⭐︎スイート⭐︎マドモアゼル", kana: "キラキラスイートマドモアゼル", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+
 ];
 
 songList.sort((a, b) => a.kana.localeCompare(b.kana, 'ja'));
