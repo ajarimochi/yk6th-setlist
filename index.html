@@ -29,9 +29,29 @@
             padding-bottom: 80px;
         }
 
+        /* --- 画面全体のレイアウト --- */
+        .layout-wrapper {
+            display: flex;              
+            justify-content: center;    
+            align-items: flex-start;    
+            gap: 30px;                  
+            max-width: 1100px;          
+            margin: 0 auto;             
+        }
+
+        /* 画面が狭い場合（1050px以下）は縦並びに戻す */
+        @media (max-width: 1050px) {
+            .layout-wrapper {
+                flex-direction: column; 
+                align-items: center;    
+            }
+        }
+
+        /* --- 1. 入力画面のスタイル --- */
         .container { 
+            width: 100%; 
             max-width: 500px; 
-            margin: 0 auto; 
+            margin: 0; 
             background: white; 
             padding: 20px; 
             border-radius: 10px; 
@@ -60,24 +80,30 @@
         
         .song-block-header { display: flex; align-items: center; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .song-block-title { font-weight: bold; margin-right: 15px; }
-        .mode-select { font-size: 0.85rem; display: flex; gap: 15px; }
+        .mode-select { font-size: 0.85rem; display: flex; gap: 15px; flex-wrap: wrap; }
         .mode-select label { font-weight: normal; margin: 0; display: inline-flex; align-items: center; }
         .mode-select input { margin-right: 4px; }
+        .mode-select-separator { border-left: 1px solid #ccc; padding-left: 15px; }
         
         .remove-song-btn { background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; float: right; margin-top: 2px; }
 
-        /* --- 2. 画像生成エリアのスタイル --- */
+        /* --- 2. 画像生成エリア（本番用：画面外へ非表示） --- */
         #setlistPreviewContainer {
             width: 500px; 
+            flex-shrink: 0;
             background-color: #ffef31; 
-            padding: 15px; 
+            padding: 0; 
             box-sizing: border-box;
             color: #0F172A;
+            transform-origin: top left;
+            display: flex;
+            flex-direction: column;
             
+            /* --- 修正: プレビューを画面外へ隠す --- */
             position: absolute;
             left: -9999px;
             top: 0;
-            transform-origin: top left;
+            /* -------------------------------------- */
         }
 
         .prev-inner {
@@ -86,6 +112,8 @@
             border-radius: 16px;
             box-shadow: 6px 6px 0px #1E293B;
             padding: 15px;
+            margin: 15px;
+            flex-grow: 1;
         }
 
         .prev-header { 
@@ -129,6 +157,25 @@
             gap: 6px;
         }
 
+        .prev-date-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .prev-time-badge {
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .badge-day { background-color: #F97316; }
+        .badge-night { background-color: #1E3A8A; }
+
         .prev-date-venue {
             background-color: #1E293B;
             color: #FFFFFF;
@@ -136,6 +183,12 @@
             font-weight: 700;
             padding: 4px 12px;
             border-radius: 4px;
+        }
+
+        .prev-encore-label {
+            align-self: flex-start;
+            margin-top: 10px;
+            margin-bottom: 0px;
         }
 
         .prev-song-list { 
@@ -151,9 +204,7 @@
             border-bottom: 1px dashed #E2E8F0; 
         }
 
-        .prev-song-item:last-child {
-            border-bottom: none;
-        }
+        .prev-song-item:last-child { border-bottom: none; }
 
         .prev-song-num-badge {
             display: flex;
@@ -205,6 +256,10 @@
             font-weight: 700; 
             color: #0F172A;
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
         }
         
         .prev-extra-info { 
@@ -221,9 +276,7 @@
             white-space: nowrap;
         }
 
-        .badge-cover { 
-            color: #888888;
-        }
+        .badge-cover { color: #888888; }
         
         .badge-singer { 
             color: #FFFFFF;
@@ -239,6 +292,22 @@
         .singer-enemy { background-color: #d64b73; } 
         .singer-collab { background-color: #9b5bd8; } 
 
+        .footer {
+            margin-top: auto;
+            padding: 10px 15px;
+            background-color: #1E293B; 
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .footer-text {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 9px;
+            color: #94A3B8; 
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        /* --- 3. 生成された画像の表示エリア --- */
         #generatedImageArea {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: none;
@@ -254,69 +323,78 @@
 </head>
 <body>
 
-<div class="container" id="inputContainer">
-    <h1>セトリジェネレーター</h1>
+<div class="layout-wrapper">
+    <div class="container" id="inputContainer">
+        <h1>セトリジェネレーター</h1>
 
-    <div class="form-group">
-        <label>公演タイトル</label>
-        <select id="liveTitle" onchange="autoFillLiveInfo()">
-            <option value="">-- 公演を選択してください --</option>
-            <option value="駒形友梨6thライブツアー札幌">駒形友梨6thライブツアー札幌</option>
-            <option value="駒形友梨6thライブツアー東京">駒形友梨6thライブツアー東京</option>
-            <option value="駒形友梨6thライブツアー名古屋">駒形友梨6thライブツアー名古屋</option>
-            <option value="駒形友梨6thライブツアー大阪">駒形友梨6thライブツアー大阪</option>
-            <option value="駒形友梨6thライブツアー福岡">駒形友梨6thライブツアー福岡</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>日時</label>
-        <input type="date" id="liveDate">
-    </div>
-    <div class="form-group">
-        <input type="text" id="liveVenue" placeholder="会場名">
-    </div>
-    
-    <div class="form-group">
-        <label>公演区分</label>
-        <div class="radio-group">
-            <label><input type="radio" name="liveTime" value="" checked>1日1公演</label>
-            <label><input type="radio" name="liveTime" value="昼"> 昼公演</label>
-            <label><input type="radio" name="liveTime" value="夜"> 夜公演</label>
+        <div class="form-group">
+            <label>公演タイトル</label>
+            <select id="liveTitle" onchange="autoFillLiveInfo()">
+                <option value="">-- 公演を選択してください --</option>
+                <option value="駒形友梨6thライブツアー札幌">駒形友梨6thライブツアー札幌</option>
+                <option value="駒形友梨6thライブツアー東京">駒形友梨6thライブツアー東京</option>
+                <option value="駒形友梨6thライブツアー名古屋">駒形友梨6thライブツアー名古屋</option>
+                <option value="駒形友梨6thライブツアー大阪">駒形友梨6thライブツアー大阪</option>
+                <option value="駒形友梨6thライブツアー福岡">駒形友梨6thライブツアー福岡</option>
+                <option value="駒形友梨6thライブツアー香川">駒形友梨6thライブツアー香川</option>
+            </select>
         </div>
-    </div>
-    
-    <div class="form-group">
-        <label>イベント形式</label>
-        <div class="radio-group">
-            <label><input type="radio" name="liveType" value="oneman" checked onclick="toggleLiveType()"> ワンマン</label>
-            <label><input type="radio" name="liveType" value="taiban" onclick="toggleLiveType()"> 対バン</label>
+        <div class="form-group">
+            <label>日時</label>
+            <input type="date" id="liveDate">
         </div>
-    </div>
-    <div class="form-group hidden" id="taibanEnemyGroup">
-        <label>対バン相手（アーティスト名）</label>
-        <input type="text" id="taibanEnemy" placeholder="例: ローリングストーンズ" oninput="updateAllSingers()">
-    </div>
-
-    <hr>
-
-    <div id="setlistContainer"></div>
-
-    <button class="btn btn-secondary" onclick="addSongBlock()">＋ 曲を追加</button>
-    <button class="btn btn-primary" style="margin-top: 30px; font-size: 1.2rem; padding: 15px;" onclick="generateSetlistImage()">
-        画像を生成して保存
-    </button>
-</div>
-
-<div id="setlistPreviewContainer">
-    <div class="prev-inner">
-        <div class="prev-header">
-            <div class="prev-title" id="prevLiveTitle">LIVE SETLIST</div>
-            <div class="prev-details">
-                <span id="prevTaibanEnemy" class="prev-taiban-w" style="display:none;"></span>
-                <span class="prev-date-venue" id="prevDateVenue"></span>
+        <div class="form-group">
+            <input type="text" id="liveVenue" placeholder="会場名">
+        </div>
+        
+        <div class="form-group">
+            <label>公演区分</label>
+            <div class="radio-group">
+                <label><input type="radio" name="liveTime" value="" checked>1日1公演</label>
+                <label><input type="radio" name="liveTime" value="昼"> 昼公演</label>
+                <label><input type="radio" name="liveTime" value="夜"> 夜公演</label>
             </div>
         </div>
-        <div class="prev-song-list" id="prevSongListArea"></div>
+        
+        <div class="form-group">
+            <label>イベント形式</label>
+            <div class="radio-group">
+                <label><input type="radio" name="liveType" value="oneman" checked onclick="toggleLiveType()"> ワンマン</label>
+                <label><input type="radio" name="liveType" value="taiban" onclick="toggleLiveType()"> 対バン</label>
+            </div>
+        </div>
+        <div class="form-group hidden" id="taibanEnemyGroup">
+            <label>対バン相手（アーティスト名）</label>
+            <input type="text" id="taibanEnemy" placeholder="例: Machico" oninput="updateAllSingers()">
+        </div>
+
+        <hr>
+
+        <div id="setlistContainer"></div>
+
+        <button class="btn btn-secondary" onclick="addSongBlock()">＋ 曲を追加</button>
+        <button class="btn btn-primary" style="margin-top: 30px; font-size: 1.2rem; padding: 15px;" onclick="generateSetlistImage()">
+            画像を生成して保存
+        </button>
+    </div>
+
+    <div id="setlistPreviewContainer">
+        <div class="prev-inner">
+            <div class="prev-header">
+                <div class="prev-title" id="prevLiveTitle">LIVE SETLIST</div>
+                <div class="prev-details">
+                    <span id="prevTaibanEnemy" class="prev-taiban-w" style="display:none;"></span>
+                    <div class="prev-date-wrap">
+                        <span id="prevLiveTimeBadge" class="prev-time-badge" style="display:none;"></span>
+                        <span class="prev-date-venue" id="prevDateVenue"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="prev-song-list" id="prevSongListArea"></div>
+        </div>
+        <div class="footer">
+            <div class="footer-text">THIS IS AN UNOFFICIAL, FAN-MADE WORK. CREATED BY ナンプラー@nannpla</div>
+        </div>
     </div>
 </div>
 
@@ -332,78 +410,86 @@ const MAIN_ARTIST = "駒形友梨";
 const tourData = {
     "駒形友梨6thライブツアー札幌": { date: "2026-06-20", venue: "札幌・プラント", type: "oneman", enemy: "" },
     "駒形友梨6thライブツアー東京": { date: "2026-08-01", venue: "SHIBYA PLEASURE PLEASURE", type: "taiban", enemy: "BURNOUT SYNDROMES" },
-    "駒形友梨6thライブツアー愛知": { date: "2026-08-15", venue: "SPADE BOX", type: "taiban", enemy: "Machico" },
+    "駒形友梨6thライブツアー名古屋": { date: "2026-08-15", venue: "SPADE BOX", type: "taiban", enemy: "Machico" },
     "駒形友梨6thライブツアー大阪": { date: "2026-08-16", venue: "梅田Shangri-la", type: "taiban", enemy: "中島愛" },
     "駒形友梨6thライブツアー福岡": { date: "2026-07-20", venue: "福岡ROOMS", type: "oneman", enemy: "" },
     "駒形友梨6thライブツアー香川": { date: "2026-07-26", venue: "高松DIME", type: "oneman", enemy: "" },
 };
 
-// ★変更：songListにタイアップ情報や原曲者情報を追加（subInfo プロパティ）
 const songList = [
-    { name: "トマレのススメ", kana: "トマレノススメ" },
-    { name: "キミと恋の予感", kana: "キミトコイノヨカン" },
-    { name: "コンパス", kana: "コンパス" },
-    { name: "ララルハレルヤ", kana: "ララルハレルヤ" },
-    { name: "happy weekend", kana: "ハッピー ウィークエンド" },
-    { name: "Night Walk", kana: "ナイトウォーク" },
-    { name: "クロックワイズ", kana: "クロックワイズ" },
-    { name: "孤悲", kana: "コイ" },
-    { name: "創だらけの詩", kana: "キズダラケノウタ" },
-    { name: "はじめからきっと", kana: "ハジメカラキット" },
-    { name: "I wish", kana: "アイ ウィッシュ" },
-    { name: "Dreaming Night", kana: "ドリーミング ナイト" },
-    { name: "ビターフラッペ", kana: "ビターフラッペ" },
-    { name: "2 world", kana: "ツー ワールド" },
-    { name: "First Step", kana: "ファースト ステップ" },
-    { name: "going forward", kana: "ゴーイング フォーワード" },
-    { name: "Here I Am", kana: "ヒア アイ アム" },
-    { name: "Neon Sign", kana: "ネオン サイン" },
-    { name: "FLY!", kana: "フライ" },
-    { name: "Yellow Love", kana: "イエロー ラブ" },
-    { name: "our story", kana: "アワー ストーリー" },
-    { name: "君の心に触れる歌", kana: "キミノココロニフレルウタ" },
-    { name: "Night Walk", kana: "ナイト ウォーク" },
-    { name: "empty", kana: "エンプティ" },
-    { name: "オービタル", kana: "オービタル" },
-    { name: "Love is Action!", kana: "ラブ イズ アクション" },
-    { name: "真珠星", kana: "シンジュボシ" },
-    { name: "insomnia", kana: "インソムニア" },
-    { name: "Good Night", kana: "グッド ナイト" },
-    { name: "a Day~and the light comes~", kana: "ア デイ アンド ザ ライト カムズ" },
-    { name: "クロワッサン", kana: "クロワッサン" },
-    { name: "On My Way", kana: "オン マイ ウェイ" },
-    { name: "シングデイズ", kana: "シングデイズ" },
-    { name: "call me today", kana: "コール ミー トゥデイ" },
-    { name: "今日は", kana: "キョウハ" },
-    { name: "ばいばい", kana: "バイバイ" },
+    { name: "I wish", kana: "アイウィッシュ" },
+    { name: "identity my ultimatum", kana: "アイデンティティマイアルティメイタム", subInfo: "Sho from MY FIRST STORY feat.駒形友梨/ウエノルカ(眩暈SIREN)" },
     { name: "アクアリウム", kana: "アクアリウム" },
-    { name: "ララルハレルヤ", kana: "ララルハレルヤ" },
-    { name: "invincible self", kana: "インヴィンシブル セルフ" },
+    { name: "a Day~and the light comes~", kana: "アデイアンドザライトカムズ" },
+    { name: "our story", kana: "アワーストーリー" },
+    { name: "Yellow Love", kana: "イエローラブ" },
+    { name: "It's HEAVEN", kana: "イッツヘブン" },
+    { name: "invincible self", kana: "インヴィンシブルセルフ" },
+    { name: "insomnia", kana: "インソムニア" },
+    { name: "Welcome!!", kana: "ウェルカム", subInfo: "765 MILLION ALLSTARS" },
+    { name: "empty", kana: "エンプティ" },
+    { name: "August 31", kana: "オーガストサーティファースト" },
+    { name: "オービタル", kana: "オービタル" },
+    { name: "All for one Forever", kana: "オールフォーワンフォーエバー", subInfo: "映画プリキュアオールスターズF" },
     { name: "おそろい", kana: "オソロイ" },
-    { name: "August 31", kana: "オーガスト サーティファースト" },
-    { name: "優しい雨", kana: "ヤサシイアメ" },
-    { name: "night sea", kana: "ナイト シー" },
-    { name: "starting in the haze", kana: "スターティング イン ザ ヘイズ" },
-    { name: "メイズ", kana: "メイズ" },
-    { name: "クロックワイズ", kana: "クロックワイズ" },
-    { name: "It's HEAVEN", kana: "イッツ ヘブン" },
-    { name: "時の葉", kana: "トキノハ" },
-    { name: "ソノヒ", kana: "ソノヒ" },
-    { name: "Talk 2 Night", kana: "トーク トゥ ナイト" },
-    { name: "トマレのススメ", kana: "トマレノススメ" },
-    { name: "Lonely Blue が終わる頃には", kana: "ロンリー ブルー ガオワルコロニハ" },
-    { name: "はじめからきっと", kana: "ハジメカラキット" },
-    { name: "All for one Forever", kana: "オール フォー ワン フォーエバー", subInfo: "映画プリキュアオールスターズF" },
+    { name: "On My Way", kana: "オンマイウェイ" },
     { name: "カラフルVacation", kana: "カラフルバケーション", subInfo: "PA大海物語 With アグネス・ラム" },
-    { name: "NExt Wave!!", kana: "ネクスト ウェーブ", subInfo: "PA大海物語 With アグネス・ラム" },
-    { name: "Champagne Gold", kana: "シャンパン ゴールド", subInfo: "PA大海物語 With アグネス・ラム" },
-    { name: "identity my ultimatum", kana: "アイデンティティ マイ アルティメイタム", subInfo: "Sho from MY FIRST STORY feat.駒形友梨/ウエノルカ(眩暈SIREN)" },
-    { name: "リコリス", kana: "リコリス", subInfo: "東堂凛" },
-    { name: "SHINE！！ キラキラ⭐︎プリキュアアラモード", kana: "シャインキラキラプリキュアアラモード", subInfo: "キラキラ⭐︎プリキュアアラモード" },
-    { name: "勇気が君を待ってる", kana: "ユウキガキミヲマッテル", subInfo: "キラキラ⭐︎プリキュアアラモード" },
-    { name: "Lu La La⭐︎Lumière", kana: "ルララルミエール", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "創だらけの詩", kana: "キズダラケノウタ" },
+    { name: "キミと恋の予感", kana: "キミトコイノヨカン" },
+    { name: "君の心に触れる歌", kana: "キミノココロニフレルウタ" },
+    { name: "今日は", kana: "キョウハ" },
     { name: "キラキラ⭐︎スイート⭐︎マドモアゼル", kana: "キラキラスイートマドモアゼル", subInfo: "キラキラ⭐︎プリキュアアラモード" },
-
+    { name: "グッドサイン", kana: "グッドサイン", subInfo: "765 MILLION ALLSTARS" },
+    { name: "Good Night", kana: "グッドナイト" },
+    { name: "Glow Map", kana: "グロウマップ", subInfo: "765 MILLION ALLSTARS" },
+    { name: "クロックワイズ", kana: "クロックワイズ" },
+    { name: "Crossing!", kana: "クロッシング", subInfo: "765 MILLION ALLSTARS" },
+    { name: "クロワッサン", kana: "クロワッサン" },
+    { name: "孤悲", kana: "コイ" },
+    { name: "going forward", kana: "ゴーイングフォーワード" },
+    { name: "call me today", kana: "コールミートゥデイ" },
+    { name: "コンパス", kana: "コンパス" },
+    { name: "Thank You!", kana: "サンキュー", subInfo: "765 MILLION ALLSTARS" },
+    { name: "SHINE！！ キラキラ⭐︎プリキュアアラモード", kana: "シャインキラキラプリキュアアラモード", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "Champagne Gold", kana: "シャンパンゴールド", subInfo: "PA大海物語 With アグネス・ラム" },
+    { name: "シングデイズ", kana: "シングデイズ" },
+    { name: "真珠星", kana: "シンジュボシ" },
+    { name: "starting in the haze", kana: "スターティングインザヘイズ" },
+    { name: "SPARKERS", kana: "スパーカーズ", subInfo: "高山紗代子" },
+    { name: "7Days A Week!!", kana: "セブンデイズアウィーク", subInfo: "765 MILLION ALLSTARS" },
+    { name: "ソノヒ", kana: "ソノヒ" },
+    { name: "蝶々むすび", kana: "チョウチョムスビ", subInfo: "765 MILLION ALLSTARS" },
+    { name: "2 world", kana: "ツーワールド" },
+    { name: "Talk 2 Night", kana: "トークトゥナイト" },
+    { name: "時の葉", kana: "トキノハ" },
+    { name: "トマレのススメ", kana: "トマレノススメ" },
+    { name: "Dreaming!", kana: "ドリーミング", subInfo: "765 MILLION ALLSTARS" },
+    { name: "Dreaming Night", kana: "ドリーミングナイト" },
+    { name: "Night Walk", kana: "ナイトウォーク" },
+    { name: "night sea", kana: "ナイトシー" },
+    { name: "Neon Sign", kana: "ネオンサイン" },
+    { name: "NExt Wave!!", kana: "ネクストウェーブ", subInfo: "PA大海物語 With アグネス・ラム" },
+    { name: "Harmony 4 You", kana: "ハーモニーフォーユー", subInfo: "765 MILLION ALLSTARS" },
+    { name: "ばいばい", kana: "バイバイ" },
+    { name: "はじめからきっと", kana: "ハジメカラキット" },
+    { name: "happy weekend", kana: "ハッピーウィークエンド" },
+    { name: "Here I Am", kana: "ヒアアイアム" },
+    { name: "ビターフラッペ", kana: "ビターフラッペ" },
+    { name: "First Step", kana: "ファーストステップ" },
+    { name: "FLY!", kana: "フライ" },
+    { name: "Flyers!!!", kana: "フライヤーズ", subInfo: "765 MILLION ALLSTARS" },
+    { name: "Brand New Theater!", kana: "ブランニューシアター", subInfo: "765 MILLION ALLSTARS" },
+    { name: "メイズ", kana: "メイズ" },
+    { name: "優しい雨", kana: "ヤサシイアメ" },
+    { name: "勇気が君を待ってる", kana: "ユウキガキミヲマッテル", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "UNION!!", kana: "ユニオン", subInfo: "765 MILLION ALLSTARS" },
+    { name: "夢にかけるRainbow", kana: "ユメニカケルレインボー", subInfo: "765 MILLION ALLSTARS" },
+    { name: "Rat A Tat!!!", kana: "ラタタ", subInfo: "765 MILLION ALLSTARS" },
+    { name: "Love is Action!", kana: "ラブイズアクション" },
+    { name: "ララルハレルヤ", kana: "ララルハレルヤ" },
+    { name: "リコリス", kana: "リコリス", subInfo: "東堂凛" },
+    { name: "Lu La La⭐︎Lumière", kana: "ルララルミエール", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "Lonely Blue が終わる頃には", kana: "ロンリーブルーガオワルコロニハ" }
 ];
 
 songList.sort((a, b) => a.kana.localeCompare(b.kana, 'ja'));
@@ -451,31 +537,38 @@ function addSongBlock() {
             <div class="mode-select">
                 <label><input type="radio" name="mode_${songCount}" value="normal" checked onclick="toggleSongMode(${songCount})"> 持ち曲</label>
                 <label><input type="radio" name="mode_${songCount}" value="cover" onclick="toggleSongMode(${songCount})"> カバー</label>
+                
+                <label class="mode-select-separator"><input type="checkbox" id="acoustic_${songCount}" onchange="renderPreviewBeforeCapture()"> アコースティック</label>
+                <label><input type="checkbox" id="encore_${songCount}" onchange="renderPreviewBeforeCapture()"> En.</label>
             </div>
         </div>
 
         <div class="song-title-div" id="songTitleDiv_${songCount}">
-            <select id="songSelect_${songCount}">${optionsHtml}</select>
-            <input type="text" id="songInput_${songCount}" class="hidden" placeholder="曲名を入力">
+            <select id="songSelect_${songCount}" onchange="renderPreviewBeforeCapture()">${optionsHtml}</select>
+            <input type="text" id="songInput_${songCount}" class="hidden" placeholder="曲名を入力" oninput="renderPreviewBeforeCapture()">
             
             <div id="artistNameDiv_${songCount}" class="artist-name-div hidden">
                 <label style="font-size:0.8rem; color:#856404; margin-bottom:2px;">アーティスト名（元曲）</label>
-                <input type="text" id="artistName_${songCount}" placeholder="例: ローリングストーンズ">
+                <input type="text" id="artistName_${songCount}" placeholder="例: 坂本真綾" oninput="renderPreviewBeforeCapture()">
             </div>
         </div>
 
         <div class="singer-div hidden" id="singerDiv_${songCount}">
             <label>歌唱者</label>
-            <select id="singerSelect_${songCount}"></select>
+            <select id="singerSelect_${songCount}" onchange="renderPreviewBeforeCapture()"></select>
         </div>
     `;
     container.appendChild(block);
     updateSingerOptions(songCount);
+    renderPreviewBeforeCapture();
 }
 
 function removeSongBlock(id) {
     const block = document.getElementById(`songBlock_${id}`);
-    if(block) { block.remove(); }
+    if(block) { 
+        block.remove(); 
+        renderPreviewBeforeCapture();
+    }
 }
 
 function toggleSongMode(id) {
@@ -489,6 +582,7 @@ function toggleSongMode(id) {
     } else {
         select.classList.remove('hidden'); input.classList.add('hidden'); artistDiv.classList.add('hidden');
     }
+    renderPreviewBeforeCapture();
 }
 
 function updateAllSingers() {
@@ -497,6 +591,7 @@ function updateAllSingers() {
         const idNum = block.id.split('_')[1];
         updateSingerOptions(idNum);
     });
+    renderPreviewBeforeCapture();
 }
 
 function updateSingerOptions(id) {
@@ -523,11 +618,11 @@ function applyTricolorBackground() {
     let stops = [];
     for (let i = 0; i < 30; i++) {
         let o = i * 330;
-        stops.push(`#ff791a ${o}px`, `#ff791a ${o + 100}px`);
+        stops.push(`#ec6a2e ${o}px`, `#ec6a2e ${o + 100}px`);
         stops.push(`#222222 ${o + 100}px`, `#222222 ${o + 110}px`);
-        stops.push(`#ffef31 ${o + 110}px`, `#ffef31 ${o + 190}px`);
+        stops.push(`#f4e001 ${o + 110}px`, `#f4e001 ${o + 190}px`);
         stops.push(`#222222 ${o + 190}px`, `#222222 ${o + 200}px`);
-        stops.push(`#398f7f ${o + 200}px`, `#398f7f ${o + 300}px`);
+        stops.push(`#128a89 ${o + 200}px`, `#128a89 ${o + 300}px`);
         stops.push(`#222222 ${o + 300}px`, `#222222 ${o + 330}px`);
     }
     document.getElementById('setlistPreviewContainer').style.background = `linear-gradient(150deg, ${stops.join(', ')})`;
@@ -543,7 +638,19 @@ function renderPreviewBeforeCapture() {
     let dateStr = "";
     if(rawDate){
         dateStr = rawDate.replace(/-/g, '/');
-        if(liveTime){ dateStr += ` [${liveTime}]`; }
+    }
+    
+    const timeBadge = document.getElementById('prevLiveTimeBadge');
+    if (liveTime === "昼") {
+        timeBadge.innerText = "昼の部";
+        timeBadge.className = "prev-time-badge badge-day";
+        timeBadge.style.display = "inline-block";
+    } else if (liveTime === "夜") {
+        timeBadge.innerText = "夜の部";
+        timeBadge.className = "prev-time-badge badge-night";
+        timeBadge.style.display = "inline-block";
+    } else {
+        timeBadge.style.display = "none";
     }
     
     if (dateStr && venue) {
@@ -582,10 +689,12 @@ function renderPreviewBeforeCapture() {
         const idNum = block.id.split('_')[1];
         const mode = block.querySelector(`input[name="mode_${idNum}"]:checked`).value;
         
+        const isAcoustic = document.getElementById(`acoustic_${idNum}`).checked;
+        const isEncore = document.getElementById(`encore_${idNum}`).checked;
+        
         let finalTitle = "";
         let coverArtist = "";
 
-        // ★変更：選択した曲に subInfo が設定されていれば自動取得する
         if(mode === 'normal'){
             finalTitle = document.getElementById(`songSelect_${idNum}`).value;
             const selectedSongData = songList.find(s => s.name === finalTitle);
@@ -599,6 +708,13 @@ function renderPreviewBeforeCapture() {
 
         if (!finalTitle || finalTitle.trim() === "") {
             return;
+        }
+
+        if (isEncore) {
+            const encoreDiv = document.createElement('div');
+            encoreDiv.className = 'prev-date-venue prev-encore-label';
+            encoreDiv.innerText = 'En.';
+            songListArea.appendChild(encoreDiv);
         }
         
         let singer = "";
@@ -622,13 +738,21 @@ function renderPreviewBeforeCapture() {
         const titleSpan = document.createElement('span');
         titleSpan.className = 'prev-song-title';
         titleSpan.innerText = finalTitle;
+        
+        if (isAcoustic) {
+            const acousticBadge = document.createElement('span');
+            acousticBadge.className = 'prev-badge badge-cover';
+            acousticBadge.innerText = '(アコースティックver.)';
+            titleSpan.appendChild(acousticBadge);
+        }
+        
         songContentDiv.appendChild(titleSpan);
         
         let extraInfoHtml = "";
-        // ★変更：modeに関わらず coverArtist に文字が入っていればバッジを表示
         if(coverArtist){
             extraInfoHtml += `<span class="prev-badge badge-cover">${coverArtist}</span>`;
         }
+
         if(extraInfoHtml){
             const extraDiv = document.createElement('div');
             extraDiv.className = 'prev-extra-info';
@@ -672,6 +796,7 @@ function generateSetlistImage() {
 
     const previewArea = document.getElementById('setlistPreviewContainer');
     
+    // --- 修正: 画像生成時にプレビュー領域を一時的に可視化 ---
     previewArea.style.position = 'fixed';
     previewArea.style.left = '0';
     previewArea.style.zIndex = '-1';
@@ -693,12 +818,15 @@ function generateSetlistImage() {
         
         document.getElementById('generatedImageArea').style.display = 'flex';
         
+        // --- 修正: 生成完了後にプレビューを再び隠す ---
         previewArea.style.position = 'absolute';
         previewArea.style.left = '-9999px';
         
     }).catch(err => {
         alert("画像の生成に失敗しました。");
         console.error(err);
+        
+        // エラー時もプレビューを隠す
         previewArea.style.position = 'absolute';
         previewArea.style.left = '-9999px';
     });
@@ -708,11 +836,19 @@ function closeImageArea() {
     document.getElementById('generatedImageArea').style.display = 'none';
 }
 
+document.getElementById('liveTitle').addEventListener('change', renderPreviewBeforeCapture);
+document.getElementById('liveDate').addEventListener('input', renderPreviewBeforeCapture);
+document.getElementById('liveVenue').addEventListener('input', renderPreviewBeforeCapture);
+document.querySelectorAll('input[name="liveTime"]').forEach(radio => radio.addEventListener('change', renderPreviewBeforeCapture));
+document.querySelectorAll('input[name="liveType"]').forEach(radio => radio.addEventListener('change', renderPreviewBeforeCapture));
+document.getElementById('taibanEnemy').addEventListener('input', renderPreviewBeforeCapture);
+
 window.onload = function() {
     for (let i = 0; i < 15; i++) {
         addSongBlock();
     }
     applyTricolorBackground();
+    renderPreviewBeforeCapture(); 
 };
 </script>
 </body>
