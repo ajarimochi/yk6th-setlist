@@ -53,7 +53,7 @@
             max-width: 500px; 
             margin: 0; 
             background: white; 
-            padding: 20px; 
+            padding: 10px; 
             border-radius: 10px; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
         }
@@ -83,7 +83,7 @@
         .mode-select { font-size: 0.85rem; display: flex; gap: 15px; flex-wrap: wrap; }
         .mode-select label { font-weight: normal; margin: 0; display: inline-flex; align-items: center; }
         .mode-select input { margin-right: 4px; }
-        .mode-select-separator { border-left: 1px solid #ccc; padding-left: 15px; }
+        .mode-select-separator { border-left: 1px solid #ccc; padding-left: 5px; }
         
         .remove-song-btn { background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; float: right; margin-top: 2px; }
 
@@ -538,7 +538,7 @@ function addSongBlock() {
                 <label><input type="radio" name="mode_${songCount}" value="normal" checked onclick="toggleSongMode(${songCount})"> 持ち曲</label>
                 <label><input type="radio" name="mode_${songCount}" value="cover" onclick="toggleSongMode(${songCount})"> カバー</label>
                 
-                <label class="mode-select-separator"><input type="checkbox" id="acoustic_${songCount}" onchange="renderPreviewBeforeCapture()"> アコースティック</label>
+                <label class="mode-select-separator"><input type="checkbox" id="acoustic_${songCount}" onchange="renderPreviewBeforeCapture()"> アコ</label>
                 <label><input type="checkbox" id="encore_${songCount}" onchange="renderPreviewBeforeCapture()"> En.</label>
             </div>
         </div>
