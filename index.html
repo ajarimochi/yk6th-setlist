@@ -56,6 +56,7 @@
             padding: 10px; 
             border-radius: 10px; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+            box-sizing: border-box;
         }
         h1 { font-size: 1.2rem; text-align: center; margin-bottom: 20px; color: #333; }
         .form-group { margin-bottom: 15px; }
@@ -75,7 +76,8 @@
 
         .hidden { display: none !important; }
         .btn { display: block; width: 100%; padding: 10px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; text-align: center; margin-top: 10px; font-weight: bold; }
-        .btn-primary { background: #007bff; color: white; }
+        .btn-primary { background: #007bff; color: white; transition: 0.2s; }
+        .btn-primary:hover { background: #0056b3; }
         .btn-secondary { background: #6c757d; color: white; }
         
         .song-block-header { display: flex; align-items: center; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
@@ -99,11 +101,10 @@
             display: flex;
             flex-direction: column;
             
-            /* --- 修正: プレビューを画面外へ隠す --- */
+            /* --- プレビューを画面外へ隠す --- */
             position: absolute;
             left: -9999px;
             top: 0;
-            /* -------------------------------------- */
         }
 
         .prev-inner {
@@ -335,10 +336,10 @@
                 <option value="駒形友梨6thライブツアー福岡">駒形友梨6thライブツアー福岡</option>
                 <option value="駒形友梨6thライブツアー香川">駒形友梨6thライブツアー香川</option>
                 <option value="駒形友梨6thライブツアー東京">駒形友梨6thライブツアー東京</option>
+                <option value="駒形友梨6thライブツアー宮城">駒形友梨6thライブツアー宮城</option>
+                <option value="駒形友梨6thライブツアー広島">駒形友梨6thライブツアー広島</option>
                 <option value="駒形友梨6thライブツアー名古屋">駒形友梨6thライブツアー名古屋</option>
                 <option value="駒形友梨6thライブツアー大阪">駒形友梨6thライブツアー大阪</option>
-                
-                
             </select>
         </div>
         <div class="form-group">
@@ -378,6 +379,9 @@
         <button class="btn btn-primary" style="margin-top: 30px; font-size: 1.2rem; padding: 15px;" onclick="generateSetlistImage()">
             画像を生成して保存
         </button>
+        <div style="text-align: center; margin-top: 15px;">
+            <a href="#" style="color: #dc3545; font-size: 0.85rem; text-decoration: underline;" onclick="clearStorageData(); return false;">保存データをすべて削除して初期化</a>
+        </div>
     </div>
 
     <div id="setlistPreviewContainer">
@@ -411,11 +415,13 @@ const MAIN_ARTIST = "駒形友梨";
 
 const tourData = {
     "駒形友梨6thライブツアー札幌": { date: "2026-06-20", venue: "札幌・プラント", type: "oneman", enemy: "" },
-    "駒形友梨6thライブツアー東京": { date: "2026-08-01", venue: "SHIBYA PLEASURE PLEASURE", type: "taiban", enemy: "BURNOUT SYNDROMES" },
-    "駒形友梨6thライブツアー名古屋": { date: "2026-08-15", venue: "SPADE BOX", type: "taiban", enemy: "Machico" },
-    "駒形友梨6thライブツアー大阪": { date: "2026-08-16", venue: "梅田Shangri-la", type: "taiban", enemy: "中島愛" },
     "駒形友梨6thライブツアー福岡": { date: "2026-07-20", venue: "福岡ROOMS", type: "oneman", enemy: "" },
     "駒形友梨6thライブツアー香川": { date: "2026-07-26", venue: "高松DIME", type: "oneman", enemy: "" },
+    "駒形友梨6thライブツアー東京": { date: "2026-08-01", venue: "SHIBYA PLEASURE PLEASURE", type: "taiban", enemy: "BURNOUT SYNDROMES" },
+    "駒形友梨6thライブツアー宮城": { date: "2026-08-02", venue: "誰も知らない劇場", type: "oneman", enemy: "" },
+    "駒形友梨6thライブツアー広島": { date: "2026-08-11", venue: "広島 Live space Reed", type: "oneman", enemy: "" },
+    "駒形友梨6thライブツアー名古屋": { date: "2026-08-15", venue: "SPADE BOX", type: "taiban", enemy: "Machico" },
+    "駒形友梨6thライブツアー大阪": { date: "2026-08-16", venue: "梅田Shangri-la", type: "taiban", enemy: "中島愛" },
 };
 
 const songList = [
@@ -498,6 +504,7 @@ const songList = [
 songList.sort((a, b) => a.kana.localeCompare(b.kana, 'ja'));
 
 let songCount = 0;
+let isRestoring = false; // データ復元中の自動保存暴発を防ぐフラグ
 
 function autoFillLiveInfo() {
     const title = document.getElementById('liveTitle').value;
@@ -511,6 +518,7 @@ function autoFillLiveInfo() {
         document.getElementById('taibanEnemy').value = data.enemy;
         toggleLiveType();
     }
+    renderPreviewBeforeCapture(); // プルダウン切り替え後にプレビューと保存を実行
 }
 
 function toggleLiveType() {
@@ -631,6 +639,117 @@ function applyTricolorBackground() {
     document.getElementById('setlistPreviewContainer').style.background = `linear-gradient(150deg, ${stops.join(', ')})`;
 }
 
+/* --- 新設: ローカルストレージへの自動保存関数 --- */
+function saveCurrentData() {
+    if (isRestoring) return; // 復元中は保存しない
+
+    const data = {
+        liveTitle: document.getElementById('liveTitle').value,
+        liveDate: document.getElementById('liveDate').value,
+        liveVenue: document.getElementById('liveVenue').value,
+        liveTime: document.querySelector('input[name="liveTime"]:checked')?.value || "",
+        liveType: document.querySelector('input[name="liveType"]:checked')?.value || "oneman",
+        taibanEnemy: document.getElementById('taibanEnemy').value,
+        songs: []
+    };
+
+    document.querySelectorAll('#setlistContainer .song-block').forEach(block => {
+        const idNum = block.id.split('_')[1];
+        const modeRadio = block.querySelector(`input[name="mode_${idNum}"]:checked`);
+        const mode = modeRadio ? modeRadio.value : "normal";
+
+        data.songs.push({
+            mode: mode,
+            acoustic: document.getElementById(`acoustic_${idNum}`).checked,
+            encore: document.getElementById(`encore_${idNum}`).checked,
+            songSelect: document.getElementById(`songSelect_${idNum}`).value,
+            songInput: document.getElementById(`songInput_${idNum}`).value,
+            artistName: document.getElementById(`artistName_${idNum}`).value,
+            singerSelect: document.getElementById(`singerSelect_${idNum}`) ? document.getElementById(`singerSelect_${idNum}`).value : ""
+        });
+    });
+
+    localStorage.setItem('yk6th_setlist_data', JSON.stringify(data));
+}
+
+/* --- 新設: ローカルストレージからのデータ復元関数 --- */
+function loadSavedData() {
+    const rawData = localStorage.getItem('yk6th_setlist_data');
+    if (!rawData) return false;
+
+    try {
+        isRestoring = true; // 復元フラグON
+        const data = JSON.parse(rawData);
+
+        // 基本情報の復元
+        document.getElementById('liveTitle').value = data.liveTitle || "";
+        document.getElementById('liveDate').value = data.liveDate || "";
+        document.getElementById('liveVenue').value = data.liveVenue || "";
+        
+        if (data.liveTime) {
+            const radio = document.querySelector(`input[name="liveTime"][value="${data.liveTime}"]`);
+            if (radio) radio.checked = true;
+        }
+
+        // イベント形式（ワンマン/対バン）の復元とUI切り替え
+        if (data.liveType) {
+            const radio = document.querySelector(`input[name="liveType"][value="${data.liveType}"]`);
+            if (radio) radio.checked = true;
+            toggleLiveType(); // 対バン枠の表示/非表示を切り替え
+        }
+
+        document.getElementById('taibanEnemy').value = data.taibanEnemy || "";
+        updateAllSingers(); // 復元したゲスト名でプルダウンの選択肢を最新化する
+
+        // 曲ブロック群の復元
+        if (data.songs && data.songs.length > 0) {
+            data.songs.forEach(song => {
+                addSongBlock();
+                const currentSongCount = songCount;
+
+                // ラジオボタン(持ち曲/カバー)の復元
+                const modeRadios = document.getElementsByName(`mode_${currentSongCount}`);
+                modeRadios.forEach(radio => {
+                    if (radio.value === song.mode) {
+                        radio.checked = true;
+                    }
+                });
+                toggleSongMode(currentSongCount); // UIを切り替え
+
+                // 各種インプットの復元
+                document.getElementById(`acoustic_${currentSongCount}`).checked = song.acoustic;
+                document.getElementById(`encore_${currentSongCount}`).checked = song.encore;
+                document.getElementById(`songSelect_${currentSongCount}`).value = song.songSelect || "";
+                document.getElementById(`songInput_${currentSongCount}`).value = song.songInput || "";
+                document.getElementById(`artistName_${currentSongCount}`).value = song.artistName || "";
+                
+                // 歌唱者（プルダウン）の復元
+                if (song.singerSelect && document.getElementById(`singerSelect_${currentSongCount}`)) {
+                    document.getElementById(`singerSelect_${currentSongCount}`).value = song.singerSelect;
+                }
+            });
+        } else {
+            // 曲データが空の場合は初期ブロックを15個作成
+            for (let i = 0; i < 15; i++) { addSongBlock(); }
+        }
+
+        isRestoring = false; // 復元フラグOFF
+        return true;
+    } catch (e) {
+        console.error("データの復元に失敗しました:", e);
+        isRestoring = false;
+        return false;
+    }
+}
+
+/* --- 新設: データの一括クリア --- */
+function clearStorageData() {
+    if (confirm("保存されている入力データをすべて削除し、初期状態に戻しますか？")) {
+        localStorage.removeItem('yk6th_setlist_data');
+        window.location.reload(); 
+    }
+}
+
 function renderPreviewBeforeCapture() {
     document.getElementById('prevLiveTitle').innerText = document.getElementById('liveTitle').value || 'LIVE SETLIST';
     
@@ -690,7 +809,8 @@ function renderPreviewBeforeCapture() {
 
     inputSongBlocks.forEach((block) => {
         const idNum = block.id.split('_')[1];
-        const mode = block.querySelector(`input[name="mode_${idNum}"]:checked`).value;
+        const modeRadio = block.querySelector(`input[name="mode_${idNum}"]:checked`);
+        const mode = modeRadio ? modeRadio.value : "normal";
         
         const isAcoustic = document.getElementById(`acoustic_${idNum}`).checked;
         const isEncore = document.getElementById(`encore_${idNum}`).checked;
@@ -786,6 +906,7 @@ function renderPreviewBeforeCapture() {
         displayIndex++;
     });
     
+    saveCurrentData(); // プレビューが更新されるたびにローカルストレージへ保存する
     return displayIndex > 1;
 }
 
@@ -799,7 +920,6 @@ function generateSetlistImage() {
 
     const previewArea = document.getElementById('setlistPreviewContainer');
     
-    // --- 修正: 画像生成時にプレビュー領域を一時的に可視化 ---
     previewArea.style.position = 'fixed';
     previewArea.style.left = '0';
     previewArea.style.zIndex = '-1';
@@ -821,7 +941,6 @@ function generateSetlistImage() {
         
         document.getElementById('generatedImageArea').style.display = 'flex';
         
-        // --- 修正: 生成完了後にプレビューを再び隠す ---
         previewArea.style.position = 'absolute';
         previewArea.style.left = '-9999px';
         
@@ -829,7 +948,6 @@ function generateSetlistImage() {
         alert("画像の生成に失敗しました。");
         console.error(err);
         
-        // エラー時もプレビューを隠す
         previewArea.style.position = 'absolute';
         previewArea.style.left = '-9999px';
     });
@@ -846,11 +964,19 @@ document.querySelectorAll('input[name="liveTime"]').forEach(radio => radio.addEv
 document.querySelectorAll('input[name="liveType"]').forEach(radio => radio.addEventListener('change', renderPreviewBeforeCapture));
 document.getElementById('taibanEnemy').addEventListener('input', renderPreviewBeforeCapture);
 
+/* --- 修正: ページ読み込み時にデータの復元を試みる --- */
 window.onload = function() {
-    for (let i = 0; i < 15; i++) {
-        addSongBlock();
-    }
     applyTricolorBackground();
+
+    const isLoaded = loadSavedData(); 
+    
+    // 過去の保存データがない場合のみ、デフォルトで15曲分の入力枠を生成する
+    if (!isLoaded) {
+        for (let i = 0; i < 15; i++) {
+            addSongBlock();
+        }
+    }
+    
     renderPreviewBeforeCapture(); 
 };
 </script>
