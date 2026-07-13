@@ -18,7 +18,7 @@
             --color-line: #222222;      
         }
 
-        .taiban-song { color: #dc3545; background-color: #f8d7da; }
+        .taiban-song { color: #e70017 !important; background: #fff3f3;}
 
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
@@ -498,7 +498,8 @@ const songList = [
     { name: "リコリス", kana: "リコリス", subInfo: "東堂凛（OVERRUN）" },
     { name: "Lu La La⭐︎Lumière", kana: "ルララルミエール", subInfo: "キラキラ⭐︎プリキュアアラモード" },
     { name: "Lonely Blue が終わる頃には", kana: "ロンリーブルーガオワルコロニハ" },
-    { name: "Many Many Musik", kana: "メニメニムジーク" }
+    { name: "Many Many Musik", kana: "メニメニムジーク" },
+
 ];
 
 songList.sort((a, b) => a.kana.localeCompare(b.kana, 'ja'));
@@ -538,7 +539,21 @@ function addSongBlock() {
     let optionsHtml = '<option value="">-- 曲を選択 --</option>';
     songList.forEach(song => {
         const taibanClass = song.taibanFlag ? ' class="taiban-song"' : '';
-        optionsHtml += `<option value="${song.name}"${taibanClass}>${song.name}</option>`;
+        
+        // --- 追加箇所: subInfoが存在する曲のみ、青色のインラインスタイルを付与 ---
+        const subInfoStyle = song.subInfo ? ' style="color: #007bff;"' : '';
+        
+        const firstKana = song.kana.charAt(0);
+        let displayName = "";
+        
+        if ("アカガサザタダナハバマヤラワ".includes(firstKana)) {
+            displayName = `${firstKana}-&emsp;${song.name}`;
+        } else {
+            displayName = `-&emsp;&emsp;${song.name}`;
+        }
+        
+        // --- 変更箇所: 生成するoptionタグに subInfoStyle を追加 ---
+        optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
     });
 
     block.innerHTML = `
