@@ -23,7 +23,7 @@
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             background: #f5f5f5; 
-            padding: 15px; 
+            padding: 5px; 
             margin: 0; 
             color: #333; 
             padding-bottom: 80px;
@@ -61,7 +61,22 @@
         h1 { font-size: 1.2rem; text-align: center; margin-bottom: 20px; color: #333; }
         .form-group { margin-bottom: 15px; }
         label { font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.9rem; }
-        input[type="text"], input[type="date"], select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        input[type="text"], input[type="date"], select { 
+            width: 100%; 
+            max-width: 100%; /* 追加：親要素より大きくならないようガード */
+            display: block;  /* 追加：ブロック要素にして横幅を安定させる */
+            padding: 8px 2px; 
+            box-sizing: border-box; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 1rem; 
+        }
+
+        /* 追加：iOS(iPhone)のカレンダーはみ出しを強制リセット */
+        input[type="date"] {
+            -webkit-appearance: none;
+            appearance: none;
+        }
         .radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
         .radio-group label { font-weight: normal; margin: 0; font-size: 0.9rem; display: flex; align-items: center; }
         .radio-group input { margin-right: 4px; }
@@ -81,13 +96,23 @@
         .btn-secondary { background: #6c757d; color: white; }
         
         .song-block-header { display: flex; align-items: center; margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .song-block-title { font-weight: bold; margin-right: 15px; }
-        .mode-select { font-size: 0.85rem; display: flex; gap: 15px; flex-wrap: wrap; }
+        .song-block-title { font-weight: bold; margin-right: 5px; }
+        .mode-select { font-size: 0.75rem; display: flex; gap: 15px; flex-wrap: wrap; }
         .mode-select label { font-weight: normal; margin: 0; display: inline-flex; align-items: center; }
         .mode-select input { margin-right: 4px; }
         .mode-select-separator { border-left: 1px solid #ccc; padding-left: 5px; }
         
-        .remove-song-btn { background: #dc3545; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; float: right; margin-top: 2px; }
+        .remove-song-btn { 
+            background: #dc3545;
+            color: white; 
+            border: none; 
+            padding: 4px 6px; 
+            border-radius: 4px; 
+            font-size: 0.7rem; 
+            cursor: pointer; 
+            float: right; 
+            margin-top: 2px; 
+        }
 
         /* --- 2. 画像生成エリア（本番用：画面外へ非表示） --- */
         #setlistPreviewContainer {
@@ -291,9 +316,9 @@ function addSongBlock() {
         let displayName = "";
         
         if ("アカガサザタダナハバマヤラワ".includes(firstKana)) {
-            displayName = `${firstKana}-&emsp;${song.name}`;
+            displayName = `${firstKana}-&nbsp;${song.name}`;
         } else {
-            displayName = `-&emsp;&emsp;${song.name}`;
+            displayName = `-&emsp;&nbsp;${song.name}`;
         }
         
         optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
