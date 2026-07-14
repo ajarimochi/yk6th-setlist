@@ -100,225 +100,42 @@
             transform-origin: top left;
             display: flex;
             flex-direction: column;
-            
-            /* --- プレビューを画面外へ隠す --- */
             position: absolute;
             left: -9999px;
             top: 0;
         }
 
-        .prev-inner {
-            background-color: #FFFFFF;
-            border: 3px solid #1E293B;
-            border-radius: 16px;
-            box-shadow: 6px 6px 0px #1E293B;
-            padding: 15px;
-            margin: 15px;
-            flex-grow: 1;
-        }
-
-        .prev-header { 
-            text-align: center; 
-            border-bottom: 2px dashed rgba(30, 41, 59, 0.3); 
-            padding-bottom: 12px; 
-            margin-bottom: 12px; 
-        }
-
-        .prev-title { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 20px; 
-            font-weight: 800; 
-            letter-spacing: 0.05em;
-            color: #1E293B; 
-            margin-bottom: 12px; 
-            line-height: 1.1; 
-            background: linear-gradient(transparent 60%, rgba(255, 239, 49, 0.6) 60%);
-            display: inline-block;
-            padding: 0 8px;
-        }
-
-        .prev-taiban-w { 
-            font-size: 15px; 
-            font-weight: 900;
-            color: #D2003B;
-            border: 3px solid #D2003B;
-            padding: 2px 12px;
-            border-radius: 6px;
-            transform: rotate(2deg);
-            display: inline-block;
-            letter-spacing: 0.1em;
-            margin-top: -5px;
-            background: rgba(255,255,255,0.9);
-        }
-
-        .prev-details { 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .prev-date-wrap {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .prev-time-badge {
-            color: #FFFFFF;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 4px;
-            letter-spacing: 0.05em;
-            flex-shrink: 0;
-        }
-
-        .badge-day { background-color: #F97316; }
-        .badge-night { background-color: #1E3A8A; }
-
-        .prev-date-venue {
-            background-color: #1E293B;
-            color: #FFFFFF;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
-        .prev-encore-label {
-            align-self: flex-start;
-            margin-top: 10px;
-            margin-bottom: 0px;
-        }
-
-        .prev-song-list { 
-            display: flex;
-            flex-direction: column;
-        }
-
-        .prev-song-item { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            padding: 8px 0; 
-            border-bottom: 1px dashed #E2E8F0; 
-        }
-
+        .prev-inner { background-color: #FFFFFF; border: 3px solid #1E293B; border-radius: 16px; box-shadow: 6px 6px 0px #1E293B; padding: 15px; margin: 15px; flex-grow: 1; }
+        .prev-header { text-align: center; border-bottom: 2px dashed rgba(30, 41, 59, 0.3); padding-bottom: 12px; margin-bottom: 12px; }
+        .prev-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: 0.05em; color: #1E293B; margin-bottom: 12px; line-height: 1.1; background: linear-gradient(transparent 60%, rgba(255, 239, 49, 0.6) 60%); display: inline-block; padding: 0 8px; }
+        .prev-taiban-w { font-size: 15px; font-weight: 900; color: #D2003B; border: 3px solid #D2003B; padding: 2px 12px; border-radius: 6px; transform: rotate(2deg); display: inline-block; letter-spacing: 0.1em; margin-top: -5px; background: rgba(255,255,255,0.9); }
+        .prev-details { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .prev-date-wrap { display: flex; align-items: center; gap: 8px; }
+        .prev-time-badge { color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.05em; flex-shrink: 0; }
+        .badge-day { background-color: #F97316; } .badge-night { background-color: #1E3A8A; }
+        .prev-date-venue { background-color: #1E293B; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 4px; }
+        .prev-encore-label { align-self: flex-start; margin-top: 10px; margin-bottom: 0px; }
+        .prev-song-list { display: flex; flex-direction: column; }
+        .prev-song-item { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px dashed #E2E8F0; }
         .prev-song-item:last-child { border-bottom: none; }
-
-        .prev-song-num-badge {
-            display: flex;
-            width: 26px;
-            height: 26px;
-            flex-shrink: 0;
-            border: 2px solid #1E293B;
-            border-radius: 6px;
-            box-shadow: 2px 2px 0px rgba(57, 143, 127, 0.8); 
-            overflow: hidden;
-            align-self: flex-start; 
-            margin-top: 2px;
-        }
-
-        .prev-song-num-label {
-            background-color: #FFFFFF;
-            color: #1E293B;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            border-right: 2px solid #1E293B;
-        }
-
-        .prev-song-num-val {
-            background-color: #398f7f;
-            color: #FFFFFF;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 800;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1.2;
-        }
-
-        .prev-song-content { 
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .prev-song-title { 
-            font-size: 15px; 
-            font-weight: 700; 
-            color: #0F172A;
-            line-height: 1.2;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        
-        .prev-extra-info { 
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .prev-badge {
-            font-size: 9px;
-            font-weight: 800;
-            padding: 2px 6px;
-            border-radius: 4px;
-            white-space: nowrap;
-        }
-
+        .prev-song-num-badge { display: flex; width: 26px; height: 26px; flex-shrink: 0; border: 2px solid #1E293B; border-radius: 6px; box-shadow: 2px 2px 0px rgba(57, 143, 127, 0.8); overflow: hidden; align-self: flex-start; margin-top: 2px; }
+        .prev-song-num-label { background-color: #FFFFFF; color: #1E293B; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 9px; display: flex; align-items: center; justify-content: center; flex: 1; border-right: 2px solid #1E293B; }
+        .prev-song-num-val { background-color: #398f7f; color: #FFFFFF; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; flex: 1.2; }
+        .prev-song-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+        .prev-song-title { font-size: 15px; font-weight: 700; color: #0F172A; line-height: 1.2; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+        .prev-extra-info { display: flex; flex-wrap: wrap; gap: 6px; }
+        .prev-badge { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
         .badge-cover { color: #888888; }
-        
-        .badge-singer { 
-            color: #FFFFFF;
-            border: none;
-            flex-shrink: 0; 
-            text-align: center;
-            line-height: 1.3;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-
+        .badge-singer { color: #FFFFFF; border: none; flex-shrink: 0; text-align: center; line-height: 1.3; padding: 2px 4px; border-radius: 4px; }
         .singer-main { background-color: #5a7bd3; } 
         .singer-enemy { background-color: #d64b73; } 
         .singer-collab { background-color: #9b5bd8; } 
-
-        .footer {
-            margin-top: auto;
-            padding: 10px 15px;
-            background-color: #1E293B; 
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .footer-text {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 9px;
-            color: #94A3B8; 
-            font-weight: 700;
-            letter-spacing: 0.1em;
-        }
+        .footer { margin-top: auto; padding: 10px 15px; background-color: #1E293B; text-align: center; flex-shrink: 0; }
+        .footer-text { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 9px; color: #94A3B8; font-weight: 700; letter-spacing: 0.1em; }
 
         /* --- 3. 生成された画像の表示エリア --- */
-        #generatedImageArea {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none;
-            justify-content: center; align-items: center; z-index: 10000;
-            flex-direction: column; overflow-y: auto; padding: 20px 0;
-        }
-        #generatedImageArea img {
-            max-width: 90%; max-height: 80%; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
-        }
+        #generatedImageArea { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 10000; flex-direction: column; overflow-y: auto; padding: 20px 0; }
+        #generatedImageArea img { max-width: 90%; max-height: 80%; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.5); margin-bottom: 20px; }
         #closeImageBtn { background: white; color: #333; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; }
     </style>
 </head>
@@ -376,9 +193,16 @@
         <div id="setlistContainer"></div>
 
         <button class="btn btn-secondary" onclick="addSongBlock()">＋ 曲を追加</button>
-        <button class="btn btn-primary" style="margin-top: 30px; font-size: 1.2rem; padding: 15px;" onclick="generateSetlistImage()">
-            画像を生成して保存
-        </button>
+
+        <div style="display: flex; gap: 10px; margin-top: 30px;">
+            <button class="btn btn-secondary" style="flex: 1; padding: 15px; margin-top: 0; font-weight: bold; background-color: #1E293B;" onclick="copySetlistText()">
+                テキストでコピー
+            </button>
+            <button class="btn btn-primary" style="flex: 1.5; font-size: 1.1rem; padding: 15px; margin-top: 0;" onclick="generateSetlistImage()">
+                画像を生成して保存
+            </button>
+        </div>
+
         <div style="text-align: center; margin-top: 15px;">
             <a href="#" style="color: #dc3545; font-size: 0.85rem; text-decoration: underline;" onclick="clearStorageData(); return false;">保存データをすべて削除して初期化</a>
         </div>
@@ -427,7 +251,7 @@ const tourData = {
 };
 
 let songCount = 0;
-let isRestoring = false; // データ復元中の自動保存暴発を防ぐフラグ
+let isRestoring = false; 
 
 function autoFillLiveInfo() {
     const title = document.getElementById('liveTitle').value;
@@ -441,7 +265,7 @@ function autoFillLiveInfo() {
         document.getElementById('taibanEnemy').value = data.enemy;
         toggleLiveType();
     }
-    renderPreviewBeforeCapture(); // プルダウン切り替え後にプレビューと保存を実行
+    renderPreviewBeforeCapture(); 
 }
 
 function toggleLiveType() {
@@ -461,8 +285,6 @@ function addSongBlock() {
     let optionsHtml = '<option value="">-- 曲を選択 --</option>';
     songList.forEach(song => {
         const taibanClass = song.taibanFlag ? ' class="taiban-song"' : '';
-        
-        // --- 追加箇所: subInfoが存在する曲のみ、青色のインラインスタイルを付与 ---
         const subInfoStyle = song.subInfo ? ' style="color: #007bff;"' : '';
         
         const firstKana = song.kana.charAt(0);
@@ -474,7 +296,6 @@ function addSongBlock() {
             displayName = `-&emsp;&emsp;${song.name}`;
         }
         
-        // --- 変更箇所: 生成するoptionタグに subInfoStyle を追加 ---
         optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
     });
 
@@ -576,9 +397,8 @@ function applyTricolorBackground() {
     document.getElementById('setlistPreviewContainer').style.background = `linear-gradient(150deg, ${stops.join(', ')})`;
 }
 
-/* --- 新設: ローカルストレージへの自動保存関数 --- */
 function saveCurrentData() {
-    if (isRestoring) return; // 復元中は保存しない
+    if (isRestoring) return; 
 
     const data = {
         liveTitle: document.getElementById('liveTitle').value,
@@ -609,16 +429,14 @@ function saveCurrentData() {
     localStorage.setItem('yk6th_setlist_data', JSON.stringify(data));
 }
 
-/* --- 新設: ローカルストレージからのデータ復元関数 --- */
 function loadSavedData() {
     const rawData = localStorage.getItem('yk6th_setlist_data');
     if (!rawData) return false;
 
     try {
-        isRestoring = true; // 復元フラグON
+        isRestoring = true; 
         const data = JSON.parse(rawData);
 
-        // 基本情報の復元
         document.getElementById('liveTitle').value = data.liveTitle || "";
         document.getElementById('liveDate').value = data.liveDate || "";
         document.getElementById('liveVenue').value = data.liveVenue || "";
@@ -628,49 +446,43 @@ function loadSavedData() {
             if (radio) radio.checked = true;
         }
 
-        // イベント形式（ワンマン/対バン）の復元とUI切り替え
         if (data.liveType) {
             const radio = document.querySelector(`input[name="liveType"][value="${data.liveType}"]`);
             if (radio) radio.checked = true;
-            toggleLiveType(); // 対バン枠の表示/非表示を切り替え
+            toggleLiveType(); 
         }
 
         document.getElementById('taibanEnemy').value = data.taibanEnemy || "";
-        updateAllSingers(); // 復元したゲスト名でプルダウンの選択肢を最新化する
+        updateAllSingers(); 
 
-        // 曲ブロック群の復元
         if (data.songs && data.songs.length > 0) {
             data.songs.forEach(song => {
                 addSongBlock();
                 const currentSongCount = songCount;
 
-                // ラジオボタン(持ち曲/カバー)の復元
                 const modeRadios = document.getElementsByName(`mode_${currentSongCount}`);
                 modeRadios.forEach(radio => {
                     if (radio.value === song.mode) {
                         radio.checked = true;
                     }
                 });
-                toggleSongMode(currentSongCount); // UIを切り替え
+                toggleSongMode(currentSongCount); 
 
-                // 各種インプットの復元
                 document.getElementById(`acoustic_${currentSongCount}`).checked = song.acoustic;
                 document.getElementById(`encore_${currentSongCount}`).checked = song.encore;
                 document.getElementById(`songSelect_${currentSongCount}`).value = song.songSelect || "";
                 document.getElementById(`songInput_${currentSongCount}`).value = song.songInput || "";
                 document.getElementById(`artistName_${currentSongCount}`).value = song.artistName || "";
                 
-                // 歌唱者（プルダウン）の復元
                 if (song.singerSelect && document.getElementById(`singerSelect_${currentSongCount}`)) {
                     document.getElementById(`singerSelect_${currentSongCount}`).value = song.singerSelect;
                 }
             });
         } else {
-            // 曲データが空の場合は初期ブロックを15個作成
             for (let i = 0; i < 15; i++) { addSongBlock(); }
         }
 
-        isRestoring = false; // 復元フラグOFF
+        isRestoring = false; 
         return true;
     } catch (e) {
         console.error("データの復元に失敗しました:", e);
@@ -679,7 +491,6 @@ function loadSavedData() {
     }
 }
 
-/* --- 新設: データの一括クリア --- */
 function clearStorageData() {
     if (confirm("保存されている入力データをすべて削除し、初期状態に戻しますか？")) {
         localStorage.removeItem('yk6th_setlist_data');
@@ -757,9 +568,11 @@ function renderPreviewBeforeCapture() {
 
         if(mode === 'normal'){
             finalTitle = document.getElementById(`songSelect_${idNum}`).value;
-            const selectedSongData = songList.find(s => s.name === finalTitle);
-            if (selectedSongData && selectedSongData.subInfo) {
-                coverArtist = selectedSongData.subInfo;
+            if (typeof songList !== 'undefined') {
+                const selectedSongData = songList.find(s => s.name === finalTitle);
+                if (selectedSongData && selectedSongData.subInfo) {
+                    coverArtist = selectedSongData.subInfo;
+                }
             }
         } else {
             finalTitle = document.getElementById(`songInput_${idNum}`).value;
@@ -843,8 +656,115 @@ function renderPreviewBeforeCapture() {
         displayIndex++;
     });
     
-    saveCurrentData(); // プレビューが更新されるたびにローカルストレージへ保存する
+    saveCurrentData(); 
     return displayIndex > 1;
+}
+
+// ★ 新設：入力された情報をテキストとして成型し、クリップボードにコピーする関数
+function copySetlistText() {
+    let text = "";
+    
+    // 1. 公演情報（ヘッダー）の組み立て
+    const title = document.getElementById('liveTitle').value || "LIVE SETLIST";
+    text += `【${title}】\n`;
+    
+    const rawDate = document.getElementById('liveDate').value;
+    const venue = document.getElementById('liveVenue').value;
+    const liveTime = document.querySelector('input[name="liveTime"]:checked').value;
+    const isTaiban = document.querySelector('input[name="liveType"]:checked').value === 'taiban';
+    
+    let dateStr = rawDate ? rawDate.replace(/-/g, '/') : "";
+    let timeStr = liveTime ? `(${liveTime}公演)` : "";
+    if (dateStr || timeStr) {
+        text += `${dateStr} ${timeStr}\n`.trim() + "\n";
+    }
+    if (venue) {
+        text += `${venue}\n`;
+    }
+    if (isTaiban) {
+        const enemy = document.getElementById('taibanEnemy').value || "Guests";
+        text += `w/ ${enemy}\n`;
+    }
+    
+    text += `\n`;
+
+    // 2. セトリ（各曲）の組み立て
+    const inputSongBlocks = document.querySelectorAll('#setlistContainer .song-block');
+    let displayIndex = 1;
+    let hasOutputEncore = false; // アンコールの見出しを一度だけ出力するためのフラグ
+
+    inputSongBlocks.forEach((block) => {
+        const idNum = block.id.split('_')[1];
+        const modeRadio = block.querySelector(`input[name="mode_${idNum}"]:checked`);
+        const mode = modeRadio ? modeRadio.value : "normal";
+        
+        const isAcoustic = document.getElementById(`acoustic_${idNum}`).checked;
+        const isEncore = document.getElementById(`encore_${idNum}`).checked;
+        
+        let finalTitle = "";
+        let coverArtist = "";
+
+        // 持ち曲 or カバー曲の判定
+        if(mode === 'normal'){
+            finalTitle = document.getElementById(`songSelect_${idNum}`).value;
+            if (typeof songList !== 'undefined') {
+                const selectedSongData = songList.find(s => s.name === finalTitle);
+                if (selectedSongData && selectedSongData.subInfo) {
+                    coverArtist = selectedSongData.subInfo;
+                }
+            }
+        } else {
+            finalTitle = document.getElementById(`songInput_${idNum}`).value;
+            coverArtist = document.getElementById(`artistName_${idNum}`).value;
+        }
+
+        if (!finalTitle || finalTitle.trim() === "") {
+            return;
+        }
+
+        let songNum = displayIndex.toString().padStart(2, '0');
+        let songLine = "";
+        
+        // アンコールの表示形式変更と出力制御
+        if (isEncore && !hasOutputEncore) {
+            songLine = `En.\n${songNum}. ${finalTitle}`;
+            hasOutputEncore = true;
+        } else {
+            songLine = `${songNum}. ${finalTitle}`;
+        }
+        
+        if (isAcoustic) {
+            songLine += ` (アコースティックver.)`;
+        }
+        
+        // coverArtistの表示形式変更
+        if (coverArtist) {
+            songLine += `／${coverArtist}`;
+        }
+        
+        if (isTaiban) {
+            const singer = document.getElementById(`singerSelect_${idNum}`).value;
+            if (singer) {
+                songLine += ` - ${singer}`;
+            }
+        }
+        
+        text += `${songLine}\n`;
+        displayIndex++;
+    });
+
+    if (displayIndex === 1) {
+        alert("コピーする曲がありません。");
+        return;
+    }
+
+    // 3. クリップボードへの書き込み処理
+    navigator.clipboard.writeText(text).then(() => {
+        alert("セトリのテキストをクリップボードにコピーしました。");
+    }).catch(err => {
+        console.error('コピーに失敗しました', err);
+        alert("コピーに失敗しました。お使いのブラウザが対応していない可能性があります。");
+    });
 }
 
 function generateSetlistImage() {
@@ -901,13 +821,11 @@ document.querySelectorAll('input[name="liveTime"]').forEach(radio => radio.addEv
 document.querySelectorAll('input[name="liveType"]').forEach(radio => radio.addEventListener('change', renderPreviewBeforeCapture));
 document.getElementById('taibanEnemy').addEventListener('input', renderPreviewBeforeCapture);
 
-/* --- 修正: ページ読み込み時にデータの復元を試みる --- */
 window.onload = function() {
     applyTricolorBackground();
 
     const isLoaded = loadSavedData(); 
     
-    // 過去の保存データがない場合のみ、デフォルトで15曲分の入力枠を生成する
     if (!isLoaded) {
         for (let i = 0; i < 15; i++) {
             addSongBlock();
