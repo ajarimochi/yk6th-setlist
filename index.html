@@ -308,24 +308,34 @@ function addSongBlock() {
     block.id = `songBlock_${songCount}`;
     
     let optionsHtml = '<option value="">-- 曲を選択 --</option>';
-    songList.forEach(song => {
-        const taibanClass = song.taibanFlag ? ' class="taiban-song"' : '';
-        const subInfoStyle = song.subInfo ? ' style="color: #007bff;"' : '';
-        
-        const firstKana = song.kana.charAt(0);
-        let displayName = "";
-        
-        if ("アカガサザタダナハバマヤラワ".includes(firstKana)) {
-            displayName = `${firstKana}-&nbsp;${song.name}`;
-        } else {
-            displayName = `-&emsp;&nbsp;${song.name}`;
-        }
-        
-        optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
-    });
+
+    if (typeof songList !== 'undefined') {
+        songList.forEach(song => {
+            const taibanClass = song.taibanFlag ? ' class="taiban-song"' : '';
+            const subInfoStyle = song.subInfo ? ' style="color: #007bff;"' : '';
+            
+            let emoji = "";
+            if (song.taibanFlag) {
+                emoji = "🤝 ";
+            } else if (song.subInfo) {
+                emoji = "🎸 ";
+            }
+            
+            const kanaStr = song.kana || "";
+            const firstKana = kanaStr.charAt(0);
+            let displayName = "";
+            
+            if (firstKana && "アカガサザタダナハバマヤラワ".includes(firstKana)) {
+                displayName = `${firstKana}-&nbsp;${emoji}${song.name}`;
+            } else {
+                displayName = `-&emsp;&nbsp;${emoji}${song.name}`;
+            }
+            
+            optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
+        });
+    }
 
     block.innerHTML = `
-        <button class="remove-song-btn" onclick="removeSongBlock(${songCount})">削除</button>
         <div class="song-block-header">
             <div class="song-block-title">M-${songCount}</div>
             <div class="mode-select">
@@ -335,6 +345,7 @@ function addSongBlock() {
                 <label class="mode-select-separator"><input type="checkbox" id="acoustic_${songCount}" onchange="renderPreviewBeforeCapture()"> アコ</label>
                 <label><input type="checkbox" id="encore_${songCount}" onchange="renderPreviewBeforeCapture()"> En.</label>
             </div>
+            <button class="remove-song-btn" style="margin-left: auto; float: none; margin-top: 0;" onclick="removeSongBlock(${songCount})">削除</button>
         </div>
 
         <div class="song-title-div" id="songTitleDiv_${songCount}">
