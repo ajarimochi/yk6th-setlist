@@ -81,6 +81,7 @@ const songList = [
     //===========================    
     //BURNOUT SYNDROMES
     //===========================
+    /*
     { name: "100万回のアイ・ラヴ・ユー", kana: "ヒャクマカイノアイラブユー", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "2020年渋谷の旅", kana: "ニセンニジュウネンシブヤノタビ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "Amateras", kana: "アマテラス", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
@@ -168,6 +169,7 @@ const songList = [
     { name: "魔王", kana: "マオウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "模範囚", kana: "モハンシュウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "檸檬", kana: "レモン", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
+    */
 
 
 ];
