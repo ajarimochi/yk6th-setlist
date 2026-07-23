@@ -202,7 +202,7 @@
 
         <div class="form-group">
             <label>公演タイトル</label>
-            <select id="liveTitle" onchange="autoFillLiveInfo()">
+            <select id="liveTitle" class="custom-select" onchange="autoFillLiveInfo()">
                 <option value="">-- 公演を選択してください --</option>
                 <option value="駒形友梨6thライブツアー札幌">駒形友梨6thライブツアー札幌</option>
                 <option value="駒形友梨6thライブツアー福岡">駒形友梨6thライブツアー福岡</option>
@@ -356,9 +356,9 @@ function addSongBlock() {
             let displayName = "";
             
             if (firstKana && "アカガサザタダナハバマヤラワ".includes(firstKana)) {
-                displayName = `${firstKana}-&nbsp;${emoji}${song.name}`;
+                displayName = `${firstKana}-${emoji}${song.name}`;
             } else {
-                displayName = `-&emsp;&nbsp;${emoji}${song.name}`;
+                displayName = `-&emsp;${emoji}${song.name}`;
             }
             
             optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
