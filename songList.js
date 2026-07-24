@@ -213,7 +213,7 @@ const songList = [
     { name: "ぐるぐるコンティニュー", kana: "グルグルコンティニュー", taibanFlag: true },
     { name: "ココロメロディー", kana: "ココロメロディー", taibanFlag: true },
     { name: "コレカラ", kana: "コレカラ", taibanFlag: true },
-    { name: "シェアして！プリキュア Machico Ver.", kana: "シェアシテプリキュアマチコバージョン" },
+    { name: "シェアして！プリキュア", kana: "シェアシテプリキュア" },
     { name: "ピンクトルマリン", kana: "ピンクトルマリン" },
     { name: "マケズギライなThank you", kana: "マケズギライナサンキュー" },
     { name: "またあした", kana: "マタアシタ" },
