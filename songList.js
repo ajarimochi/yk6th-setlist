@@ -77,7 +77,7 @@ const songList = [
     { name: "Lu La La⭐︎Lumière", kana: "ルララルミエール", subInfo: "キラキラ⭐︎プリキュアアラモード" },
     { name: "Lonely Blue が終わる頃には", kana: "ロンリーブルーガオワルコロニハ" },
     { name: "Many Many Musik", kana: "メニメニムジーク" },
-    
+    /*
     //===========================    
     //BURNOUT SYNDROMES
     //===========================
@@ -168,7 +168,7 @@ const songList = [
     { name: "魔王", kana: "マオウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "模範囚", kana: "モハンシュウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "檸檬", kana: "レモン", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
-
+*/
 
 ];
 
