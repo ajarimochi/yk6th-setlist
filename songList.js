@@ -36,7 +36,7 @@ const songList = [
     { name: "call me today", kana: "コールミートゥデイ" },
     { name: "コンパス", kana: "コンパス" },
     { name: "Thank You!", kana: "サンキュー", subInfo: "765 MILLION ALLSTARS" },
-    { name: "SHINE！！ キラキラ⭐︎プリキュアアラモード", kana: "シャインキラキラプリキュアアラモード", subInfo: "キラキラ⭐︎プリキュアアラモード" },
+    { name: "SHINE!! キラキラ⭐︎プリキュアアラモード", kana: "シャインキラキラプリキュアアラモード", subInfo: "キラキラ⭐︎プリキュアアラモード" },
     { name: "Champagne Gold", kana: "シャンパンゴールド", subInfo: "PA大海物語 With アグネス・ラム" },
     { name: "シングデイズ", kana: "シングデイズ" },
     { name: "真珠星", kana: "シンジュボシ" },
