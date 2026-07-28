@@ -123,7 +123,6 @@ const songList = [
     { name: "エアギターガール", kana: "エアギターガール", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "エレベーターガール", kana: "エレベーターガール", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "こどものじかん", kana: "コドモノジカン", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
-    { name: "ザ・ワールド・イズ・マイン", kana: "ザワールドイズマイン", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "セツナヒコウキ", kana: "セツナヒコウキ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "ダーウィンに捧ぐ", kana: "ダーウィンニササグ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "タイムカプセルに青空を", kana: "タイムカプセルニアオゾラヲ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
