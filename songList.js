@@ -79,7 +79,7 @@ const songList = [
     { name: "Many Many Musik", kana: "メニメニムジーク" },
     { name: "トレビアンサンブル!!", kana: "トレビアンサンブル", subInfo: "映画キラキラ☆プリキュアアラモード パリッと!想い出のミルフィーユ!" },
     { name: "We are the future！", kana: "ウィーアーザフューチャー" },
-    
+    /*
     //===========================    
     //BURNOUT SYNDROMES
     //===========================
@@ -169,8 +169,8 @@ const songList = [
     { name: "魔王", kana: "マオウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "模範囚", kana: "モハンシュウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "檸檬", kana: "レモン", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
+*/
 
-/*
     //===========================
     //machico
     //===========================
@@ -238,7 +238,7 @@ const songList = [
     { name: "摩天楼グッバイ", kana: "マテンロウグッバイ" },
     { name: "勇気のつばさ", kana: "ユウキノツバサ" },
     { name: "有頂天", kana: "ウチョウテン" },
-    */
+
     
 
 ];
