@@ -240,7 +240,7 @@ const songList = [
     { name: "有頂天", kana: "ウチョウテン", taibanFlag: true },
 
 
-
+/*
     //===========================
     //中島愛
     //===========================
@@ -353,7 +353,7 @@ const songList = [
     { name: "プリキュア・メモリ", kana: "プリキュアメモリ", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
     { name: "パーティ ハズカム", kana: "パーティハズカム", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
     { name: "虹色ハピネス", kana: "ニジイロハピネス", taibanFlag: true, subInfo: "キュアラブリー（ハピネスチャージプリキュア！）" },
-
+*/
 
 ];
 
