@@ -348,7 +348,11 @@ const songList = [
     { name: "恋", kana: "コイ", taibanFlag: true },
     { name: "恋のジングル", kana: "コイノジングル", taibanFlag: true, subInfo: "めぐちゃん from ラジオ「れでぃのたしなみ」" },
     { name: "恋のパズルを解いて", kana: "コイノパズルヲトイテ", taibanFlag: true, subInfo: "姫川エレナ（ファイ・ブレイン ～神のパズル）" },
-
+    { name: "Kailan", kana: "カイラン", taibanFlag: true },
+    { name: "ハピネスチャージプリキュア！WOW！", kana: "ハピネスチャージプリキュアワオ", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
+    { name: "プリキュア・メモリ", kana: "プリキュアメモリ", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
+    { name: "パーティ ハズカム", kana: "パーティハズカム", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
+    { name: "虹色ハピネス", kana: "ニジイロハピネス", taibanFlag: true, subInfo: "キュアラブリー（ハピネスチャージプリキュア！）" },
 
 
 ];
