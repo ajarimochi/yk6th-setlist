@@ -175,9 +175,9 @@
             <label>公演タイトル</label>
             <select id="liveTitle" onchange="autoFillLiveInfo()">
                 <option value="">-- 公演を選択してください --</option>
-                <!-- <option value="駒形友梨6thライブツアー札幌">駒形友梨6thライブツアー札幌</option>
+                <option value="駒形友梨6thライブツアー札幌">駒形友梨6thライブツアー札幌</option>
                 <option value="駒形友梨6thライブツアー福岡">駒形友梨6thライブツアー福岡</option>
-                <option value="駒形友梨6thライブツアー香川">駒形友梨6thライブツアー香川</option> -->
+                <option value="駒形友梨6thライブツアー香川">駒形友梨6thライブツアー香川</option>
                 <option value="駒形友梨6thライブツアー東京">駒形友梨6thライブツアー東京</option>
                 <option value="駒形友梨6thライブツアー宮城">駒形友梨6thライブツアー宮城</option>
                 <option value="駒形友梨6thライブツアー広島">駒形友梨6thライブツアー広島</option>
@@ -214,13 +214,6 @@
             <input type="text" id="taibanEnemy" placeholder="例: Machico" oninput="updateAllSingers()">
         </div>
 
-        <!-- アーティスト絞り込み用UI -->
-        <div class="form-group">
-            <label>表示するアーティストの曲</label>
-            <div class="radio-group" id="artistFilterContainer">
-                <!-- JavaScriptで動的にチェックボックスが生成されます -->
-            </div>
-        </div>
         <hr>
 
         <div id="setlistContainer"></div>
@@ -317,15 +310,8 @@ function addSongBlock() {
     
     let optionsHtml = '<option value="">-- 曲を選択 --</option>';
 
-// --- 4. 既存の addSongBlock() 内の変数変更 ---
-// addSongBlock() 関数の中で `songList.forEach(...)` となっている箇所を、
-// `` としてから
-// `currentSongList.forEach(...)` に書き換えてください。
-
-
     if (typeof songList !== 'undefined') {
-        const currentSongList = getFilteredSongList();
-        currentSongList.forEach(song => {
+        songList.forEach(song => {
             const taibanClass = song.taibanFlag ? ' class="taiban-song"' : '';
             const subInfoStyle = song.subInfo ? ' style="color: #007bff;"' : '';
             
@@ -880,95 +866,6 @@ window.onload = function() {
         }
     }
     
-    renderPreviewBeforeCapture(); 
-};
-
-// --- 1. 初期化時にアーティストのチェックボックスを動的生成 ---
-function initArtistFilter() {
-    const container = document.getElementById('artistFilterContainer');
-    
-    // masterSongList から重複のないアーティスト名の配列を作成（Setオブジェクトを活用）
-    const artists = [...new Set(masterSongList.map(song => song.artist))].filter(Boolean);
-
-    artists.forEach(artist => {
-        const label = document.createElement('label');
-        // 初期状態: 駒形友梨とBURNOUT SYNDROMESのみチェックを入れる（任意に変更可能）
-        const isChecked = (artist === "駒形友梨" || artist === "BURNOUT SYNDROMES") ? "checked" : "";
-        
-        label.innerHTML = `
-            <input type="checkbox" value="${artist}" class="artist-filter-cb" ${isChecked} onchange="updateAllDropdowns()"> 
-            ${artist}
-        `;
-        container.appendChild(label);
-    });
-}
-
-// --- 2. 現在チェックされているアーティストの曲だけを取得する関数 ---
-function getFilteredSongList() {
-    // チェックされているチェックボックスの値（アーティスト名）を配列で取得
-    const checkedBoxes = document.querySelectorAll('.artist-filter-cb:checked');
-    const activeArtists = Array.from(checkedBoxes).map(cb => cb.value);
-
-    // activeArtists に含まれるアーティストの曲だけを返す
-    return masterSongList.filter(song => activeArtists.includes(song.artist));
-}
-
-// --- 3. すべての曲ドロップダウンを再構築する関数 ---
-function updateAllDropdowns() {
-    // 絞り込まれた最新の曲リストを取得
-    const currentSongList = getFilteredSongList();
-    const inputSongBlocks = document.querySelectorAll('#setlistContainer .song-block');
-    
-    inputSongBlocks.forEach(block => {
-        const idNum = block.id.split('_')[1];
-        const select = document.getElementById(`songSelect_${idNum}`);
-        
-        // 現在選択されている曲名を記憶（再構築後に選択状態を復元するため）
-        const currentValue = select.value; 
-        
-        // 新しい option 要素のHTMLを組み立てる
-        let optionsHtml = '<option value="">-- 曲を選択 --</option>';
-        currentSongList.forEach(song => {
-            const taibanClass = song.taibanFlag ? ' class="taiban-song"' : '';
-            const subInfoStyle = song.subInfo ? ' style="color: #007bff;"' : '';
-            
-            let emoji = "";
-            if (song.taibanFlag) emoji = "🤝";
-            else if (song.subInfo) emoji = "🎸";
-            
-            const firstKana = song.firstKana || "";
-            const displayName = firstKana 
-                ? `${firstKana}-${emoji}${song.name}` 
-                : `-&emsp;${emoji}${song.name}`;
-            
-            optionsHtml += `<option value="${song.name}"${taibanClass}${subInfoStyle}>${displayName}</option>`;
-        });
-        
-        select.innerHTML = optionsHtml;
-        
-        // 記憶しておいた曲名が新しいリストにも存在すれば選択状態を復元、なければ未選択にする
-        if (currentSongList.find(s => s.name === currentValue)) {
-            select.value = currentValue;
-        } else {
-            select.value = "";
-        }
-    });
-    
-    renderPreviewBeforeCapture(); // 画像プレビューも更新
-}
-
-
-
-// --- 5. 起動処理 (window.onload) への追加 ---
-window.onload = function() {
-    initArtistFilter(); // ★ 初期化を追加
-    applyTricolorBackground();
-    const isLoaded = loadSavedData(); 
-    if (!isLoaded) {
-        for (let i = 0; i < 15; i++) {
-            addSongBlock();
-        }
-    }
     renderPreviewBeforeCapture(); 
 };
 </script>
