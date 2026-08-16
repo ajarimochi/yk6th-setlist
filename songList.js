@@ -170,7 +170,7 @@ const songList = [
     { name: "模範囚", kana: "モハンシュウ", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
     { name: "檸檬", kana: "レモン", taibanFlag: true, subInfo: "BURNOUT SYNDROMES" },
 */
-
+/*
     //===========================
     //machico
     //===========================
@@ -238,9 +238,9 @@ const songList = [
     { name: "摩天楼グッバイ", kana: "マテンロウグッバイ", taibanFlag: true },
     { name: "勇気のつばさ", kana: "ユウキノツバサ", taibanFlag: true },
     { name: "有頂天", kana: "ウチョウテン", taibanFlag: true },
+*/
 
 
-/*
     //===========================
     //中島愛
     //===========================
@@ -353,7 +353,7 @@ const songList = [
     { name: "プリキュア・メモリ", kana: "プリキュアメモリ", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
     { name: "パーティ ハズカム", kana: "パーティハズカム", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
     { name: "虹色ハピネス", kana: "ニジイロハピネス", taibanFlag: true, subInfo: "キュアラブリー（ハピネスチャージプリキュア！）" },
-*/
+
 
 ];
 
