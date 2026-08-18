@@ -79,6 +79,8 @@ const songList = [
     { name: "Many Many Musik", kana: "メニメニムジーク" },
     { name: "トレビアンサンブル!!", kana: "トレビアンサンブル", subInfo: "映画キラキラ☆プリキュアアラモード パリッと!想い出のミルフィーユ!" },
     { name: "We are the future！", kana: "ウィーアーザフューチャー" },
+    { name: "DANZEN!ふたりはプリキュア", kana: "ダンゼンフタリハプリキュア", subInfo: "五條真由美"},
+
     /*
     //===========================    
     //BURNOUT SYNDROMES
@@ -279,7 +281,7 @@ const songList = [
     { name: "Wake Up!", kana: "ウェイク アップ", taibanFlag: true },
     { name: "white heart rhythm", kana: "ホワイト ハート リズム", taibanFlag: true },
     { name: "Wish", kana: "ウィッシュ", taibanFlag: true },
-    { name: "アイモ", kana: "アイモ", taibanFlag: true, subInfo: "ランカ･リー" },
+    { name: "アイモ", kana: "アイモ", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）" },
     { name: "あの日の海", kana: "アノヒノウミ", taibanFlag: true },
     { name: "ありがとう", kana: "アリガトウ", taibanFlag: true },
     { name: "いにしえの歌（キラキラVer.）", kana: "イニシエノウタ キラキラバージョン", taibanFlag: true, subInfo: "メロエッタ（劇場版「ポケットモンスター ベストウイッシュ メロエッタのキラキラリサイタル」）" },
@@ -298,13 +300,13 @@ const songList = [
     { name: "ねこ日記", kana: "ネコニッキ", taibanFlag: true },
     { name: "ノスタルジア", kana: "ノスタルジア", taibanFlag: true },
     { name: "ハイブリッド　スターチス", kana: "ハイブリッド スターチス", taibanFlag: true },
-    { name: "ホシキラ", kana: "ホシキラ", taibanFlag: true, subInfo: "ランカ･リー" },
+    { name: "ホシキラ", kana: "ホシキラ", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）" },
     { name: "マーブル", kana: "マーブル", taibanFlag: true },
     { name: "メロディ", kana: "メロディ", taibanFlag: true },
     { name: "メロンソーダ・フロート", kana: "メロンソーダ フロート", taibanFlag: true },
     { name: "ゆびさきの雨", kana: "ユビサキノアメ", taibanFlag: true },
     { name: "ライオン", kana: "ライオン", taibanFlag: true, subInfo: "May'n,中島　愛" },
-    { name: "ライオン -ランカver.-", kana: "ライオン ランカバージョン", taibanFlag: true, subInfo: "ランカ･リー" },
+    { name: "ライオン -ランカver.-", kana: "ライオン ランカバージョン", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）" },
     { name: "リルロマンティック feat. GUMI", kana: "リルロマンティック フィーチャリング グミ", taibanFlag: true },
     { name: "わたしにできること", kana: "ワタシニデキルコト", taibanFlag: true },
     { name: "ワタシノセカイ", kana: "ワタシノセカイ", taibanFlag: true },
@@ -328,7 +330,7 @@ const songList = [
     { name: "真夜中のドア<松原みき>　　", kana: "マヨナカノドア マツバラミキ", taibanFlag: true },
     { name: "神様のいたずら", kana: "カミサマノイタズラ", taibanFlag: true },
     { name: "水槽", kana: "スイソウ", taibanFlag: true },
-    { name: "星間飛行", kana: "セイカンヒコウ", taibanFlag: true, subInfo: "ランカ･リー" },
+    { name: "星間飛行", kana: "セイカンヒコウ", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）" },
     { name: "青いスタスィオン<河合その子>　", kana: "アオイスタスィオン カワイソノコ", taibanFlag: true },
     { name: "素顔でフォーリンラブ", kana: "スガオデフォーリンラブ", taibanFlag: true, subInfo: "沙倉 楓（けんぷファー）" },
     { name: "窓際のジェラシー", kana: "マドギワノジェラシー", taibanFlag: true },
@@ -339,7 +341,7 @@ const songList = [
     { name: "髪飾りの天使", kana: "カミカザリノテンシ", taibanFlag: true },
     { name: "悲しみと共に", kana: "カナシミトトモニ", taibanFlag: true },
     { name: "風色のフィルム", kana: "カゼイロノフィルム", taibanFlag: true },
-    { name: "放課後オーバーフロウ", kana: "ホウカゴオーバーフロウ", taibanFlag: true, subInfo: "ランカ･リー" },
+    { name: "放課後オーバーフロウ", kana: "ホウカゴオーバーフロウ", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）" },
     { name: "忘れないよ。", kana: "ワスレナイヨ", taibanFlag: true },
     { name: "未来の記憶", kana: "ミライノキオク", taibanFlag: true },
     { name: "未来の栞", kana: "ミライノシオリ", taibanFlag: true, subInfo: "藍羽ルリ（セイクリッドセブン）" },
@@ -353,6 +355,8 @@ const songList = [
     { name: "プリキュア・メモリ", kana: "プリキュアメモリ", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
     { name: "パーティ ハズカム", kana: "パーティハズカム", taibanFlag: true, subInfo: "ハピネスチャージプリキュア！" },
     { name: "虹色ハピネス", kana: "ニジイロハピネス", taibanFlag: true, subInfo: "キュアラブリー（ハピネスチャージプリキュア！）" },
+    { name: "そうだよ。", kana: "ソウダヨ", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）"},
+    { name: "What 'bout my star?", kana: "ホワットバウトマイスター", taibanFlag: true, subInfo: "ランカ･リー（マクロスF）"},
 
 
 ];
